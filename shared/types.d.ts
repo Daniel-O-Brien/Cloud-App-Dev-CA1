@@ -20,7 +20,7 @@ export type Cast = {
 }
 
 export type Award = {
-    award_id: number,
+    id: number,
     body: string,
     category: string,
     year: number

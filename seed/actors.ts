@@ -1,6 +1,6 @@
 import {Actor} from '../shared/types'
 
-export const MovieActor: Actor[] = [
+export const actors: Actor[] = [
  {
     id: 1234,
     name: "Joe Bloggs",
