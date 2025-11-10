@@ -9,19 +9,19 @@ export type Actor = {
     id: number,
     name: string,
     bio: string,
-    "date of birth": string
+    date_of_birth: string
 }
 
 export type Cast = {
-    "movie id": number,
-    "actor id": number,
-    "role name": string,
-    "role description": string
+    movie_id: number,
+    actor_id: number,
+    role_name: string,
+    role_description: string
 }
 
 export type Award = {
-    "award id": number,
-    "body": string,
-    "category": string,
-    "year": number
+    award_id: number,
+    body: string,
+    category: string,
+    year: number
 }

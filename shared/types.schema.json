@@ -1,0 +1,78 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Movie": {
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "overview": {
+                    "type": "string"
+                },
+                "release_date": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "overview",
+                "release_date",
+                "title"
+            ],
+            "type": "object"
+        },
+        "MovieCast": {
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "date_of_birth": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "bio",
+                "date_of_birth"
+            ],
+            "type": "object"
+        },
+        "MovieCastMemberQueryParams": {
+            "additionalProperties": false,
+            "properties": {
+                "movie_id": {
+                    "type": "number"
+                },
+                "actor_id": {
+                    "type": "number"
+                },
+                "role_name": {
+                    "type": "string"
+                },
+                "role_description": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "movieId",
+                "actor_id",
+                "role_name",
+                "role_description"
+            ],
+            "type": "object"
+        }
+    }
+}
+
