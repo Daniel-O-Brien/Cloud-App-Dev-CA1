@@ -15,8 +15,9 @@ const ddbDocClient = createDDbDocClient();
 export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
   try {
     console.log("[EVENT]", JSON.stringify(event));
-    const queryParams = event.queryStringParameters;
-    if (!queryParams) {
+    const parameters  = event?.pathParameters;
+    const movieId = parameters?.movieId ? parseInt(parameters.movieId) : undefined;
+    if (!movieId) {
       return {
         statusCode: 500,
         headers: {
@@ -25,32 +26,32 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
         body: JSON.stringify({ message: "Missing query parameters" }),
  };
  }
-    if (!isValidQueryParams(queryParams)) {
-      return {
-        statusCode: 500,
-        headers: {
-          "content-type": "application/json",
- },
-        body: JSON.stringify({
-          message: `Incorrect type. Must match Query parameters schema`,
-          schema: schema.definitions["MovieCastMemberQueryParams"],
- }),
- };
- }
-    const movieId = parseInt(queryParams.movieId);
-        let commandInput: QueryCommandInput = {
-          TableName: process.env.TABLE_NAME,
-     };
-        if ("cast" in queryParams) {
-          commandInput = {
-     ...commandInput,
-            KeyConditionExpression: "movieId = :m and begins_with(actorName, :a)",
-            ExpressionAttributeValues: {
-              ":c": movieId,
-              ":r": queryParams.roleName,
-     },
-    };
-  }
+//     if (!isValidQueryParams(movieId)) {
+//       return {
+//         statusCode: 500,
+//         headers: {
+//           "content-type": "application/json",
+//  },
+//         body: JSON.stringify({
+//           message: `Incorrect type. Must match Query parameters schema`,
+//           schema: schema.definitions["MovieCastMemberQueryParams"],
+//  }),
+//  };
+//  }
+//     const movieId = parseInt(queryParams.movieId);
+//         let commandInput: QueryCommandInput = {
+//           TableName: process.env.TABLE_NAME,
+//      };
+  //       if ("cast" in queryParams) {
+  //         commandInput = {
+  //    ...commandInput,
+  //           KeyConditionExpression: "movieId = :m and begins_with(actorName, :a)",
+  //           ExpressionAttributeValues: {
+  //             ":c": movieId,
+  //             ":r": queryParams.roleName,
+  //    },
+  //   };
+  // }
 
     const commandOutput = await ddbDocClient.send(
       new GetCommand({
