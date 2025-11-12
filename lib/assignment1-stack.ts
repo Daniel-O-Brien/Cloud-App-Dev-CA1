@@ -125,6 +125,4 @@ export class Assignment1Stack extends cdk.Stack {
     movieEndpoint.addMethod(
       "GET",
       new apig.LambdaIntegration(getMovieByIdFn, { proxy: true })
-    );
-
-}}https://ui81d76hfi.execute-api.eu-west-1.amazonaws.com/dev
+    );}}
