@@ -27,3 +27,9 @@ export type Award = {
     category: string,
     year: number
 }
+
+export type MovieCastMemberQueryParams = {
+  movieId: string;
+  actorName?: string;
+  roleName?: string
+}

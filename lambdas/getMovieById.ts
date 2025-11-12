@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, GetCommand, QueryCommand, QueryCommandInput } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, QueryCommand, QueryCommandInput } from "@aws-sdk/lib-dynamodb";
 import Ajv from "ajv";
 import schema from "../shared/types.schema.json";
 
@@ -16,25 +16,27 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
   try {
     console.log("[EVENT]", JSON.stringify(event));
     const parameters  = event?.pathParameters;
-    const movieId = parameters?.movieId ? parseInt(parameters.movieId) : undefined;
+    const movieId = parameters?.movieId;
     if (!movieId) {
       return {
         statusCode: 500,
         headers: {
           "content-type": "application/json",
- },
-        body: JSON.stringify({ message: "Missing query parameters" }),
- };
- }
+        },
+        body: JSON.stringify({ message: "Missing path parameters" }),
+      };
+    }
 
     const commandOutput = await ddbDocClient.send(
-      new GetCommand({
+      new QueryCommand({
         TableName: process.env.TABLE_NAME,
-        Key: { id: movieId },
+        KeyConditionExpression: "pk = :pk",
+        ExpressionAttributeValues: { ":pk": movieId }
       })
     );
-    console.log("GetCommand response: ", commandOutput);
-    if (!commandOutput.Item) {
+    console.log("QueryCommand response: ", commandOutput);
+    const item = commandOutput.Items && commandOutput.Items.length > 0 ? commandOutput.Items[0] : undefined;
+    if (!item) {
       return {
         statusCode: 404,
         headers: {
@@ -44,7 +46,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
       };
     }
     const body = {
-      data: commandOutput.Item,
+      data: item,
     };
 
     return {

@@ -8,7 +8,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
   try {
     console.log("[EVENT]", JSON.stringify(event));
     const parameters  = event?.pathParameters;
-    const movieId = parameters?.movieId ? parseInt(parameters.movieId) : undefined;
+    const movieId = parameters?.movieId;
     if (!movieId) {
       return {
         statusCode: 404,

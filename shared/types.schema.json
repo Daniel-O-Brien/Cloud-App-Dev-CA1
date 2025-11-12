@@ -4,8 +4,11 @@
         "Movie": {
             "additionalProperties": false,
             "properties": {
-                "id": {
-                    "type": "number"
+                "pk": {
+                    "type": "string"
+                },
+                "sk": {
+                    "type": "string"
                 },
                 "overview": {
                     "type": "string"
@@ -18,7 +21,8 @@
                 }
             },
             "required": [
-                "id",
+                "pk",
+                "sk",
                 "overview",
                 "release_date",
                 "title"
@@ -28,8 +32,11 @@
         "MovieCast": {
             "additionalProperties": false,
             "properties": {
-                "id": {
-                    "type": "number"
+                "pk": {
+                    "type": "string"
+                },
+                "sk": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -42,7 +49,8 @@
                 }
             },
             "required": [
-                "id",
+                "pk",
+                "sk",
                 "name",
                 "bio",
                 "date_of_birth"
@@ -52,11 +60,11 @@
         "MovieCastMemberQueryParams": {
             "additionalProperties": false,
             "properties": {
-                "movie_id": {
-                    "type": "number"
+                "pk": {
+                    "type": "string"
                 },
-                "actor_id": {
-                    "type": "number"
+                "sk": {
+                    "type": "string"
                 },
                 "role_name": {
                     "type": "string"
@@ -66,8 +74,8 @@
                 }
             },
             "required": [
-                "movieId",
-                "actor_id",
+                "pk",
+                "sk",
                 "role_name",
                 "role_description"
             ],
